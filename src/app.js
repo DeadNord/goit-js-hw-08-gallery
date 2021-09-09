@@ -63,3 +63,82 @@ const galleryItems = [
     description: 'Lighthouse Coast Sea',
   },
 ];
+
+const refs = {
+  galleryList: document.querySelector('ul.js-gallery'),
+  lightbox: document.querySelector('div.lightbox'),
+  btn: document.querySelector('[data-action="close-lightbox"]'),
+  overlay: document.querySelector('.lightbox__overlay')
+};
+
+
+refs.galleryList.addEventListener('click', onClickHandler);
+refs.btn.addEventListener('click', onCloseHandler);
+refs.overlay.addEventListener('click', onCloseHandler);
+document.addEventListener('keydown', function(e) {
+if (e.key === 'Escape') {
+    onCloseHandler();
+  }
+});
+
+document.addEventListener('key', function(e) {
+if (e.key === 'Right' || e.key === 'Left') {
+  console.log("F");
+}
+});
+
+const createImage = (item, parent) => {
+  const { preview, original, description } = item;
+  const img = document.createElement('img');
+  
+  img.classList.add('gallery__image');
+  img.dataset.source = original;
+  img.src = preview;
+  img.alt = description;
+  
+  parent.appendChild(img);
+};
+
+const createLink = (item, parent) => {
+  const { original } = item;
+  const a = document.createElement('a');
+  
+  a.classList.add('gallery__link');
+  a.href = original;
+  
+  createImage(item, a);
+  
+  parent.appendChild(a);
+};
+
+const createItem = (item) => {
+  const li = document.createElement('li');
+  li.classList.add('gallery__item');
+  
+  createLink(item, li);
+  
+  return li;
+};
+
+const renderListItems = (arr) => {
+  const items = arr.map((item) => createItem(item));
+  
+  refs.galleryList.append(...items);
+};
+
+renderListItems(galleryItems);
+
+
+
+
+function onClickHandler(e) {
+  e.preventDefault();
+  
+    refs.lightbox.classList.add('is-open');
+    refs.lightbox.querySelector('.lightbox__image').src = e.target.src;
+    refs.lightbox.querySelector('.lightbox__image').alt = e.target.alt;
+}
+
+function onCloseHandler(e) {
+    refs.lightbox.classList.remove('is-open');
+}
