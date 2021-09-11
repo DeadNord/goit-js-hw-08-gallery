@@ -81,12 +81,6 @@ if (e.key === 'Escape') {
   }
 });
 
-document.addEventListener('key', function(e) {
-if (e.key === 'Right' || e.key === 'Left') {
-  console.log("F");
-}
-});
-
 const createImage = (item, parent) => {
   const { preview, original, description } = item;
   const img = document.createElement('img');
