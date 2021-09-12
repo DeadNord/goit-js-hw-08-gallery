@@ -79,7 +79,11 @@ const refs = {
 refs.galleryList.addEventListener("click", onClickHandler);
 refs.btn.addEventListener("click", onCloseHandler);
 refs.overlay.addEventListener("click", onCloseHandler);
-document.addEventListener("keydown", onCloseHandler);
+document.addEventListener("keydown", function(e) {
+if (e.key === 'Escape') {
+  onCloseHandler();
+  }
+});
 window.addEventListener("keydown", slider);
 
 // Создание изображения
@@ -144,10 +148,8 @@ function onClickHandler(e) {
 // Функция закрытия
 
 function onCloseHandler(e) {
-  if (e.key === "Escape") {
   refs.lightbox.classList.remove("is-open");
   updateLightboxImage();
-  }
 }
 
 // Функция обновления img
