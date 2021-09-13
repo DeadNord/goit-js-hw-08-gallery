@@ -79,11 +79,6 @@ const refs = {
 refs.galleryList.addEventListener("click", onClickHandler);
 refs.btn.addEventListener("click", onCloseHandler);
 refs.overlay.addEventListener("click", onCloseHandler);
-document.addEventListener("keydown", function(e) {
-if (e.key === 'Escape') {
-  onCloseHandler();
-  }
-});
 window.addEventListener("keydown", slider);
 
 // Создание изображения
@@ -175,19 +170,22 @@ function getActiveImg() {
 // Слайдер
 
 function slider(e) {
-  let index = getActiveImg();
+let index = getActiveImg();
 
-  if (e.code === "ArrowRight") {
-    index += 1;
-    if (index > galleryItemsLength) {
-      index = 0;
-    }
-  } else if (e.code === "ArrowLeft") {
-    index -= 1;
-    if (index <= 0) {
-      index = galleryItemsLength;
-    }
+if (e.code === "Escape") {
+  onCloseHandler();
   }
-  const { original, description } = galleryItems[index];
-  updateLightboxImage(original, description);
+if (e.code === "ArrowRight") {
+index += 1;
+   if (index > galleryItemsLength) {
+index = 0;
+}
+} else if (e.code === "ArrowLeft") {
+index -= 1;
+if (index <= 0) {
+index = galleryItemsLength;
+}
+}
+const { original, description } = galleryItems[index];
+updateLightboxImage(original, description);
 }
